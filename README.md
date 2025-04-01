@@ -55,9 +55,6 @@ The final model — **XGBoost trained on undersampled dataset** — achieved the
 - Compared **SHAP values** with XGBoost's built-in **feature importances**
 - Key predictors: `'ClaimsFrequency'`, `'PremiumAmount'`, `Tenure_years`, and `'Total_Cost_claims_year'`
 
-<p align="center">
-  <img src="outputs/feature_importance_comparison.png" width="600"/>
-</p>
 
 ---
 
