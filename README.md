@@ -1,12 +1,78 @@
 # 🚗 Auto Insurance Policy Lapse Risk Prediction
 This machine learning project predicts whether an insurance policy will lapse (i.e., be canceled or terminated) using real-world features from motor policy data, including claim types and customer behavior.
 
-Steps
+## 📌 Objective
+To proactively identify customers at high risk of lapsing their auto insurance policy, enabling early intervention strategies such as personalized outreach, incentives, or policy adjustments.
 
-1. Navigate into project folder "insurance-policy-lapse-prediction" using cd command    ->  % cd /Users/henryudeogu/Documents/AllState_MachineLearningInterview/insurance-policy-lapse-prediction)
-2. Create the virtual environment with name "insurance_policy"   ->   % python -m venv insurance_policy
-3. Activate the virtual environment   ->   source insurance_policy/bin/activate
-4. Install libraries/packages needed using the requirements.txt file   ->   % pip install -r requirements.txt
-5. Install ipykernel so we can create a kernel for the virtual environment Jupyter Notebook   ->  % pip install ipykernel
-6. Create a kernel with the name "insurance_policy"   ->  % python -m ipykernel install --user --name=insurance_policy
-7. Launch Jupyter Notebook   ->  % jupyter notebook
+---
+
+## 📂 Datasets
+- `main_dataset.csv`: Contains customer profiles, contract information, behavioral features, and the target variable `Lapse`.
+- `sample_type_claim.csv`: Partial data with detailed claim types and associated costs.
+
+---
+
+## ⚙️ Workflow
+
+### 1. Preprocessing
+- Missing value imputation using **kNN**
+- Feature extraction from dates: `Customer_age`, `Tenure_years`
+- One-hot encoding of categorical variables
+- Skew reduction via **log** and **Yeo-Johnson** transformations
+
+### 2. Data Enrichment
+- Merged detailed claims data by `Policy_ID`
+- Created aggregated and binary features like `HighSeverityClaimCost`, `Has_serious_claim`, etc.
+
+### 3. Class Balancing
+- Applied **SMOTE**, **ADASYN**, and **SMOTE-ENN**
+- Generated high-quality synthetic samples using **CTGAN**
+
+### 4. Feature Engineering & Selection
+- Used **Variance Inflation Factor (VIF)** and **Information Value (IV)** for selection
+- Kept certain high-VIF features based on SHAP importance
+
+### 5. Modeling
+- Evaluated: Logistic Regression, Random Forest, XGBoost
+- Hyperparameter tuning with **RandomizedSearchCV**
+- Decision threshold tuning for optimal F1-score
+
+---
+
+## 📈 Results
+
+| Metric     | Score  |
+|------------|--------|
+| **F1-score** (Test) | 0.52 |
+| **ROC AUC**         | 0.80 |
+| **PR AUC**          | 0.57 |
+
+The final model — **XGBoost trained on undersampled dataset** — achieved the best performance on the test set.
+
+---
+
+## 🧠 Model Explainability
+- Used **SHAP (TreeExplainer)** for local and global interpretability
+- Compared **SHAP values** with XGBoost's built-in **feature importances**
+- Key predictors: `'ClaimsFrequency'`, `'PremiumAmount'`, `Tenure_years`, and `'Total_Cost_claims_year'`
+
+<p align="center">
+  <img src="outputs/feature_importance_comparison.png" width="600"/>
+</p>
+
+---
+
+## 📊 Visuals
+- ROC and PR curves with annotated thresholds
+- F1-score vs. threshold plots
+- Confusion matrix
+- Class imbalance visualization before and after SMOTE
+
+---
+
+## 📦 Requirements
+
+Install dependencies from:
+
+```bash
+pip install -r requirements.txt
