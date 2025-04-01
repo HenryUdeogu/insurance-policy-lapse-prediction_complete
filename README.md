@@ -18,23 +18,22 @@ To proactively identify customers at high risk of lapsing their auto insurance p
 - Missing value imputation using **kNN**
 - Feature extraction from dates: `Customer_age`, `Tenure_years`
 - One-hot encoding of categorical variables
-- Skew reduction via **log** and **Yeo-Johnson** transformations
+- Skew reduction via **log** transformations
 
 ### 2. Data Enrichment
 - Merged detailed claims data by `Policy_ID`
 - Created aggregated and binary features like `HighSeverityClaimCost`, `Has_serious_claim`, etc.
 
 ### 3. Class Balancing
-- Applied **SMOTE**, **ADASYN**, and **SMOTE-ENN**
-- Generated high-quality synthetic samples using **CTGAN**
+- Applied **SMOTE**, **Undersampling**, and **SVM-SMOTE**
 
 ### 4. Feature Engineering & Selection
-- Used **Variance Inflation Factor (VIF)** and **Information Value (IV)** for selection
+- Used **Variance Inflation Factor (VIF)** for selection
 - Kept certain high-VIF features based on SHAP importance
 
 ### 5. Modeling
 - Evaluated: Logistic Regression, Random Forest, XGBoost
-- Hyperparameter tuning with **RandomizedSearchCV**
+- Hyperparameter tuning with **GridSearchCV**
 - Decision threshold tuning for optimal F1-score
 
 ---
